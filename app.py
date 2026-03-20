@@ -1,50 +1,43 @@
 from flask import Flask, render_template, request, redirect, session
-import psycopg2, os
+import json
 
 app = Flask(__name__)
-app.secret_key = "nitin_movie_site_secret_2026_super_secure_key_123"
+app.secret_key = "nitin_secret_2026"
 
 ADMIN_PASS = "nitin000001"
 
-DATABASE_URL = os.environ.get("DATABASE_URL")
-conn = psycopg2.connect(DATABASE_URL)
-cur = conn.cursor()
+def load_movies():
+    try:
+        with open("movies.json","r") as f:
+            return json.load(f)
+    except:
+        return []
 
-cur.execute("""
-CREATE TABLE IF NOT EXISTS movies (
-id SERIAL PRIMARY KEY,
-name TEXT,
-poster TEXT,
-link480 TEXT,
-size480 TEXT,
-link720 TEXT,
-size720 TEXT,
-link1080 TEXT,
-size1080 TEXT
-)
-""")
-conn.commit()
+def save_movies(data):
+    with open("movies.json","w") as f:
+        json.dump(data,f,indent=4)
 
-def get_movies():
-    cur.execute("SELECT * FROM movies ORDER BY id DESC")
-    return cur.fetchall()
-
+# HOME + SEARCH
 @app.route("/")
 def home():
-    q = request.args.get("q","").lower()
-    movies = get_movies()
+    q = request.args.get("q")
+    movies = load_movies()
+
     if q:
-        movies = [m for m in movies if q in m[1].lower()]
+        movies = [m for m in movies if q.lower() in m["name"].lower()]
+
     return render_template("index.html", movies=movies, query=q)
 
+# MOVIE PAGE
 @app.route("/movie/<int:id>")
 def movie(id):
-    cur.execute("SELECT * FROM movies WHERE id=%s",(id,))
-    m = cur.fetchone()
-    return render_template("movie.html", m=m)
+    movies = load_movies()
+    return render_template("movie.html", movie=movies[id])
 
+# ADMIN LOGIN SAME PAGE
 @app.route("/admin", methods=["GET","POST"])
 def admin():
+
     if not session.get("admin"):
         if request.method == "POST":
             if request.form["password"] == ADMIN_PASS:
@@ -52,55 +45,61 @@ def admin():
                 return redirect("/admin")
 
         return '''
+        <html>
         <style>
-        body{background:#0b1220;color:white;display:flex;justify-content:center;align-items:center;height:100vh}
-        .box{background:#111;padding:30px;border-radius:15px;text-align:center}
+        body{background:#020c1b;display:flex;justify-content:center;align-items:center;height:100vh}
+        .box{background:#111827;padding:30px;border-radius:15px;color:white;text-align:center}
         input{padding:10px;border-radius:10px;border:none}
-        button{padding:10px;background:#6a11cb;color:white;border:none;border-radius:10px}
+        button{padding:10px 20px;background:#7b2ff7;color:white;border:none;border-radius:10px}
         </style>
         <div class="box">
-        <h2>Admin Login</h2>
+        <h2>🔐 Admin Login</h2>
         <form method="post">
-        <input name="password" placeholder="Password"><br><br>
-        <button>Enter</button>
+        <input type="password" name="password"><br><br>
+        <button>Login</button>
         </form>
         </div>
+        </html>
         '''
 
+    movies = load_movies()
+
     if request.method == "POST":
-        cur.execute("""INSERT INTO movies 
-        (name,poster,link480,size480,link720,size720,link1080,size1080)
-        VALUES (%s,%s,%s,%s,%s,%s,%s,%s)""",
-        (request.form["name"],request.form["poster"],
-         request.form["link480"],request.form["size480"],
-         request.form["link720"],request.form["size720"],
-         request.form["link1080"],request.form["size1080"]))
-        conn.commit()
-
-    return render_template("admin.html", movies=get_movies())
-
-@app.route("/delete/<int:id>")
-def delete(id):
-    cur.execute("DELETE FROM movies WHERE id=%s",(id,))
-    conn.commit()
-    return redirect("/admin")
-
-@app.route("/edit/<int:id>", methods=["GET","POST"])
-def edit(id):
-    if request.method == "POST":
-        cur.execute("""UPDATE movies SET 
-        name=%s,poster=%s,link480=%s,size480=%s,
-        link720=%s,size720=%s,link1080=%s,size1080=%s
-        WHERE id=%s""",
-        (request.form["name"],request.form["poster"],
-         request.form["link480"],request.form["size480"],
-         request.form["link720"],request.form["size720"],
-         request.form["link1080"],request.form["size1080"],id))
-        conn.commit()
+        movies.append({
+            "name": request.form["name"],
+            "poster": request.form["poster"],
+            "link480": request.form["link480"],
+            "link720": request.form["link720"],
+            "link1080": request.form["link1080"]
+        })
+        save_movies(movies)
         return redirect("/admin")
 
-    cur.execute("SELECT * FROM movies WHERE id=%s",(id,))
-    m = cur.fetchone()
-    return render_template("edit.html", m=m)
+    return render_template("admin.html", movies=movies)
 
-app.run(host="0.0.0.0", port=10000)
+# DELETE
+@app.route("/delete/<int:id>")
+def delete(id):
+    movies = load_movies()
+    movies.pop(id)
+    save_movies(movies)
+    return redirect("/admin")
+
+# EDIT
+@app.route("/edit/<int:id>", methods=["GET","POST"])
+def edit(id):
+    movies = load_movies()
+
+    if request.method == "POST":
+        movies[id]["name"] = request.form["name"]
+        movies[id]["poster"] = request.form["poster"]
+        movies[id]["link480"] = request.form["link480"]
+        movies[id]["link720"] = request.form["link720"]
+        movies[id]["link1080"] = request.form["link1080"]
+
+        save_movies(movies)
+        return redirect("/admin")
+
+    return render_template("edit.html", movie=movies[id], id=id)
+
+app.run()
