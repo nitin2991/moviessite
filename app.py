@@ -2,9 +2,9 @@ from flask import Flask, render_template, request, redirect, session
 import os
 
 app = Flask(__name__)
-app.secret_key = "nitin_movie_site_secret_2026_super_secure_key_123"
+app.secret_key = "nitin_movie_site_secret_2026"
 
-ADMIN_PASS = "nitin000001"  # change
+ADMIN_PASS = "nitin000001"
 
 movies = []
 
@@ -22,18 +22,18 @@ def movie(id):
         return redirect("/")
     return render_template("movie.html", m=movies[id])
 
-# ADMIN (PASSWORD)
-@app.route("/admin", methods=["GET", "POST"])
+# ADMIN LOGIN
+@app.route("/admin", methods=["GET","POST"])
 def admin():
     if not session.get("admin"):
-        if request.method == "POST" and request.form.get("password") == ADMIN_PASS:
+        if request.method == "POST" and request.form["password"] == ADMIN_PASS:
             session["admin"] = True
             return redirect("/admin")
         return '''
         <div style="text-align:center;margin-top:100px;color:white;background:#0b1220;height:100vh">
             <h2>🔐 Admin Login</h2>
             <form method="post">
-                <input type="password" name="password" placeholder="Password" style="padding:10px;border-radius:10px"><br><br>
+                <input type="password" name="password" placeholder="Password"><br><br>
                 <button style="padding:10px 20px;border-radius:10px;background:#6a5cff;color:white;border:none">Login</button>
             </form>
         </div>
@@ -62,33 +62,15 @@ def add():
 def delete(id):
     global movies
     movies = [m for m in movies if m["id"] != id]
-    # reindex
     for i, m in enumerate(movies):
         m["id"] = i
     return redirect("/admin")
 
-# EDIT PAGE (inline simple)
+# EDIT PAGE
 @app.route("/edit/<int:id>")
 def edit(id):
-    m = next((x for x in movies if x["id"] == id), None)
-    if not m:
-        return redirect("/admin")
-    return f'''
-    <body style="background:#0b1220;color:white;font-family:sans-serif;text-align:center">
-    <h2>Edit Movie</h2>
-    <form method="post" action="/update/{id}">
-    <input name="name" value="{m['name']}"><br>
-    <input name="poster" value="{m['poster']}"><br>
-    <input name="link_480" value="{m['link_480']}">
-    <input name="size_480" value="{m['size_480']}"><br>
-    <input name="link_720" value="{m['link_720']}">
-    <input name="size_720" value="{m['size_720']}"><br>
-    <input name="link_1080" value="{m['link_1080']}">
-    <input name="size_1080" value="{m['size_1080']}"><br><br>
-    <button>Update</button>
-    </form>
-    </body>
-    '''
+    movie = next((m for m in movies if m["id"] == id), None)
+    return render_template("edit.html", movie=movie)
 
 # UPDATE
 @app.route("/update/<int:id>", methods=["POST"])
