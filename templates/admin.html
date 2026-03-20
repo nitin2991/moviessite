@@ -1,25 +1,25 @@
-<h2>Admin Panel</h2>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
-<form method="post" action="/add">
-<input name="name" placeholder="Name"><br>
-<input name="poster" placeholder="Poster"><br>
+<div class="admin-box">
 
-<input name="link_480" placeholder="480 link">
-<input name="size_480" placeholder="480 size"><br>
-
-<input name="link_720" placeholder="720 link">
-<input name="size_720" placeholder="720 size"><br>
-
-<input name="link_1080" placeholder="1080 link">
-<input name="size_1080" placeholder="1080 size"><br>
-
+<form method="POST">
+<input name="name" placeholder="Movie Name">
+<input name="poster" placeholder="Poster">
+<input name="link480" placeholder="480 link">
+<input name="size480" placeholder="480 size">
+<input name="link720" placeholder="720 link">
+<input name="size720" placeholder="720 size">
+<input name="link1080" placeholder="1080 link">
+<input name="size1080" placeholder="1080 size">
 <button>Add</button>
 </form>
 
 {% for m in movies %}
 <div>
-{{m.name}}
-<a href="/edit/{{m.id}}">Edit</a>
-<a href="/delete/{{m.id}}">Delete</a>
+{{m[1]}}
+<a href="/edit/{{m[0]}}">Edit</a>
+<a href="/delete/{{m[0]}}">Delete</a>
 </div>
 {% endfor %}
+
+</div>
