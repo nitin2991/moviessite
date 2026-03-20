@@ -1,17 +1,13 @@
-<h2>Edit Movie</h2>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
-<form method="post" action="/update/{{movie.id}}">
-<input name="name" value="{{movie.name}}"><br>
-<input name="poster" value="{{movie.poster}}"><br>
-
-<input name="link_480" value="{{movie.link_480}}">
-<input name="size_480" value="{{movie.size_480}}"><br>
-
-<input name="link_720" value="{{movie.link_720}}">
-<input name="size_720" value="{{movie.size_720}}"><br>
-
-<input name="link_1080" value="{{movie.link_1080}}">
-<input name="size_1080" value="{{movie.size_1080}}"><br>
-
+<form method="POST">
+<input name="name" value="{{m[1]}}">
+<input name="poster" value="{{m[2]}}">
+<input name="link480" value="{{m[3]}}">
+<input name="size480" value="{{m[4]}}">
+<input name="link720" value="{{m[5]}}">
+<input name="size720" value="{{m[6]}}">
+<input name="link1080" value="{{m[7]}}">
+<input name="size1080" value="{{m[8]}}">
 <button>Update</button>
 </form>
