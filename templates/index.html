@@ -1,52 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>MoviesDrive</title>
-<style>
-body {background:#0a0f1c;color:white;font-family:sans-serif;}
-.grid {display:grid;grid-template-columns:repeat(2,1fr);gap:15px;padding:15px;}
-.card {background:#111;border-radius:15px;padding:10px;}
-.card img {width:100%;border-radius:10px;}
-.btn {display:block;margin:5px;padding:10px;text-align:center;
-background:linear-gradient(45deg,#6a11cb,#ff4d4d);border-radius:20px;color:white;text-decoration:none;}
-</style>
-</head>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
-<body>
-
-<div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:linear-gradient(90deg,#1a1a2e,#6a11cb);">
-
-<div style="display:flex;align-items:center;gap:10px;">
-<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCq0eh-pykatLtKLVqzjeLKhtKk0WPbHslSWcZ8FzF_j92YYvD4mqlDovu&s=10"
-style="width:55px;height:55px;border-radius:12px;">
+<div class="header">
+<div class="logo">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCq0eh-pykatLtKLVqzjeLKhtKk0WPbHslSWcZ8FzF_j92YYvD4mqlDovu&s=10">
 <h2>MoviesDrive</h2>
 </div>
-
-<form method="get">
-<input name="q" placeholder="Search" style="padding:8px;border-radius:20px;border:none;">
-</form>
-
 </div>
-
-<h2 style="text-align:center;">Total Movies: {{total}}</h2>
 
 <div class="grid">
 {% for m in movies %}
+<a href="/movie/{{m[0]}}">
 <div class="card">
-<a href="/movie/{{m.id}}">
-<img src="{{m.poster}}">
-</a>
-<h3>{{m.name}}</h3>
+<img src="{{m[2]}}">
+<div class="title">{{m[1]}}</div>
 </div>
+</a>
 {% endfor %}
 </div>
 
-<div style="position:fixed;bottom:20px;right:20px;">
-<a href="https://t.me/Nitin_710" target="_blank"
-style="background:#0088cc;color:white;padding:12px;border-radius:50%;">
-📩
+<div class="tg">
+<a href="https://t.me/Nitin_710">
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
 </a>
 </div>
-
-</body>
-</html>
