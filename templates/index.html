@@ -15,10 +15,10 @@
 
 <div class="grid">
 {% for m in movies %}
-<a href="/movie/{{m[0]}}">
+<a href="/movie/{{loop.index0}}">
 <div class="card">
-<img src="{{m[2]}}">
-<div class="title">{{m[1]}}</div>
+<img src="{{m.poster}}">
+<div class="title">{{m.name}}</div>
 </div>
 </a>
 {% endfor %}
