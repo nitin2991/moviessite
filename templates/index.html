@@ -1,0 +1,12 @@
+<h1>🎬 Latest Movies</h1>
+
+{% for m in movies %}
+<div>
+  <h2>{{ m.title }}</h2>
+  <img src="{{ m.image }}" width="200">
+  <br>
+  <a href="{{ m.link1080 }}">Download 1080p</a>
+  <a href="{{ m.link720 }}">Download 720p</a>
+</div>
+<hr>
+{% endfor %}
