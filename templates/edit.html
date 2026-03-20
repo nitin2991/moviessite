@@ -1,24 +1,17 @@
-<!DOCTYPE html>
-<html>
-<body style="background:#0b1220;color:white;text-align:center;font-family:sans-serif">
-
 <h2>Edit Movie</h2>
 
-<form method="POST" action="/update/{{ movie.id }}">
-<input name="name" value="{{ movie.name }}"><br>
-<input name="poster" value="{{ movie.poster }}"><br>
+<form method="post" action="/update/{{movie.id}}">
+<input name="name" value="{{movie.name}}"><br>
+<input name="poster" value="{{movie.poster}}"><br>
 
-<input name="link_480" value="{{ movie.link_480 }}">
-<input name="size_480" value="{{ movie.size_480 }}"><br>
+<input name="link_480" value="{{movie.link_480}}">
+<input name="size_480" value="{{movie.size_480}}"><br>
 
-<input name="link_720" value="{{ movie.link_720 }}">
-<input name="size_720" value="{{ movie.size_720 }}"><br>
+<input name="link_720" value="{{movie.link_720}}">
+<input name="size_720" value="{{movie.size_720}}"><br>
 
-<input name="link_1080" value="{{ movie.link_1080 }}">
-<input name="size_1080" value="{{ movie.size_1080 }}"><br><br>
+<input name="link_1080" value="{{movie.link_1080}}">
+<input name="size_1080" value="{{movie.size_1080}}"><br>
 
 <button>Update</button>
 </form>
-
-</body>
-</html>
