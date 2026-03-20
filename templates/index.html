@@ -1,23 +1,21 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 <div class="header">
-
 <div class="logo">
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCq0eh-pykatLtKLVqzjeLKhtKk0WPbHslSWcZ8FzF_j92YYvD4mqlDovu&s=10">
 <h2>MoviesDrive</h2>
 </div>
 
 <div class="search">
-<form method="GET">
+<form>
 <input name="q" placeholder="Search..." value="{{query}}">
 </form>
 </div>
-
 </div>
 
 <div class="grid">
 {% for m in movies %}
-<a href="/movie/{{m[0]}}" style="text-decoration:none;color:white;">
+<a href="/movie/{{m[0]}}">
 <div class="card">
 <img src="{{m[2]}}">
 <div class="title">{{m[1]}}</div>
@@ -26,7 +24,6 @@
 {% endfor %}
 </div>
 
-<!-- Telegram -->
 <div class="tg">
 <a href="https://t.me/Nitin_710">
 <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
