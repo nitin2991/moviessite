@@ -1,11 +1,27 @@
-<h2>Add Movie</h2>
+<!DOCTYPE html>
+<html>
+<body style="background:#0b0f1a;color:white;font-family:Arial">
 
-<form method="post">
-  <input name="title" placeholder="Movie Name"><br>
-  <input name="image" placeholder="Poster URL"><br>
-  <input name="link1080" placeholder="1080p link"><br>
-  <input name="link720" placeholder="720p link"><br>
-  <button type="submit">Add</button>
+<h1>🎬 Admin Panel</h1>
+<p>Total Movies: {{ total }}</p>
+
+<form method="POST" action="/add">
+<input name="name" placeholder="Movie Name">
+<input name="poster" placeholder="Poster URL">
+<input name="link_720" placeholder="720p Link">
+<input name="link_1080" placeholder="1080p Link">
+<button>Add Movie</button>
 </form>
 
-<a href="/">Go Home</a>
+<hr>
+
+{% for m in movies %}
+<p>
+{{ m.name }}
+<a href="/edit/{{ m.id }}">Edit</a>
+<a href="/delete/{{ m.id }}">Delete</a>
+</p>
+{% endfor %}
+
+</body>
+</html>
