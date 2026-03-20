@@ -1,35 +1,25 @@
-<!DOCTYPE html>
-<html>
-<body style="background:#0b1220;color:white;font-family:sans-serif">
-
 <h2>Admin Panel</h2>
-<p>Total Movies: {{ total }}</p>
 
-<form method="POST" action="/add">
-<input name="name" placeholder="Movie Name"><br>
-<input name="poster" placeholder="Poster URL"><br>
+<form method="post" action="/add">
+<input name="name" placeholder="Name"><br>
+<input name="poster" placeholder="Poster"><br>
 
-<input name="link_480" placeholder="480p link">
-<input name="size_480" placeholder="480p size"><br>
+<input name="link_480" placeholder="480 link">
+<input name="size_480" placeholder="480 size"><br>
 
-<input name="link_720" placeholder="720p link">
-<input name="size_720" placeholder="720p size"><br>
+<input name="link_720" placeholder="720 link">
+<input name="size_720" placeholder="720 size"><br>
 
-<input name="link_1080" placeholder="1080p link">
-<input name="size_1080" placeholder="1080p size"><br><br>
+<input name="link_1080" placeholder="1080 link">
+<input name="size_1080" placeholder="1080 size"><br>
 
-<button>Add Movie</button>
+<button>Add</button>
 </form>
 
-<hr>
-
 {% for m in movies %}
-<p>
-{{ m.name }}
-<a href="/edit/{{ m.id }}">Edit</a>
-<a href="/delete/{{ m.id }}">Delete</a>
-</p>
+<div>
+{{m.name}}
+<a href="/edit/{{m.id}}">Edit</a>
+<a href="/delete/{{m.id}}">Delete</a>
+</div>
 {% endfor %}
-
-</body>
-</html>
