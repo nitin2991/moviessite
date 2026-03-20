@@ -10,7 +10,6 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 conn = psycopg2.connect(DATABASE_URL)
 cur = conn.cursor()
 
-# TABLE
 cur.execute("""
 CREATE TABLE IF NOT EXISTS movies (
 id SERIAL PRIMARY KEY,
@@ -28,22 +27,22 @@ conn.commit()
 
 def get_movies():
     cur.execute("SELECT * FROM movies ORDER BY id DESC")
-    rows = cur.fetchall()
-    return rows
+    return cur.fetchall()
 
-# HOME
 @app.route("/")
 def home():
-    return render_template("index.html", movies=get_movies())
+    q = request.args.get("q","").lower()
+    movies = get_movies()
+    if q:
+        movies = [m for m in movies if q in m[1].lower()]
+    return render_template("index.html", movies=movies, query=q)
 
-# MOVIE PAGE
 @app.route("/movie/<int:id>")
 def movie(id):
     cur.execute("SELECT * FROM movies WHERE id=%s",(id,))
     m = cur.fetchone()
     return render_template("movie.html", m=m)
 
-# ADMIN
 @app.route("/admin", methods=["GET","POST"])
 def admin():
     if not session.get("admin"):
@@ -80,14 +79,12 @@ def admin():
 
     return render_template("admin.html", movies=get_movies())
 
-# DELETE
 @app.route("/delete/<int:id>")
 def delete(id):
     cur.execute("DELETE FROM movies WHERE id=%s",(id,))
     conn.commit()
     return redirect("/admin")
 
-# EDIT
 @app.route("/edit/<int:id>", methods=["GET","POST"])
 def edit(id):
     if request.method == "POST":
