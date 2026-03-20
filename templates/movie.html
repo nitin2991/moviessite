@@ -1,18 +1,10 @@
-<!DOCTYPE html>
-<html>
-<body style="background:#0a0f1c;color:white;text-align:center;">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
-<h2>{{m.name}}</h2>
-<img src="{{m.poster}}" width="300"><br><br>
+<div class="card">
+<img src="{{m[2]}}">
+<div class="title">{{m[1]}}</div>
 
-<a class="btn" href="{{m.link_480}}">480p {{m.size_480}}</a>
-<a class="btn" href="{{m.link_720}}">720p {{m.size_720}}</a>
-<a class="btn" href="{{m.link_1080}}">1080p {{m.size_1080}}</a>
-
-<style>
-.btn {display:block;margin:10px auto;padding:12px;width:200px;
-background:linear-gradient(45deg,#6a11cb,#ff4d4d);border-radius:25px;color:white;text-decoration:none;}
-</style>
-
-</body>
-</html>
+<a class="btn" href="{{m[3]}}">480p {{m[4]}}</a>
+<a class="btn" href="{{m[5]}}">720p {{m[6]}}</a>
+<a class="btn" href="{{m[7]}}">1080p {{m[8]}}</a>
+</div>
