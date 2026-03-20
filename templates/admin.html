@@ -1,24 +1,32 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
-<div class="admin-box">
+<div style="padding:15px">
 
 <form method="POST">
-<input name="name" placeholder="Movie Name">
+<input name="name" placeholder="Name">
 <input name="poster" placeholder="Poster">
+
 <input name="link480" placeholder="480 link">
 <input name="size480" placeholder="480 size">
+
 <input name="link720" placeholder="720 link">
 <input name="size720" placeholder="720 size">
+
 <input name="link1080" placeholder="1080 link">
 <input name="size1080" placeholder="1080 size">
-<button>Add</button>
+
+<button class="btn">Add Movie</button>
 </form>
 
+<hr>
+
 {% for m in movies %}
-<div>
-{{m[1]}}
-<a href="/edit/{{m[0]}}">Edit</a>
-<a href="/delete/{{m[0]}}">Delete</a>
+<div class="movie-row">
+<div>{{m[1]}}</div>
+<div class="actions">
+<a class="edit-btn" href="/edit/{{m[0]}}">Edit</a>
+<a class="delete-btn" href="/delete/{{m[0]}}">Delete</a>
+</div>
 </div>
 {% endfor %}
 
