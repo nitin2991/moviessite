@@ -1,10 +1,21 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
-<div class="card">
-<img src="{{m[2]}}">
-<div class="title">{{m[1]}}</div>
+<div class="download-box">
 
-<a class="btn" href="{{m[3]}}">480p {{m[4]}}</a>
-<a class="btn" href="{{m[5]}}">720p {{m[6]}}</a>
-<a class="btn" href="{{m[7]}}">1080p {{m[8]}}</a>
+<img src="{{m[2]}}" style="width:100%;border-radius:15px;">
+
+<h2 class="download-title">{{m[1]}}</h2>
+
+<a class="btn" href="{{m[3]}}">
+480p {{m[4]}}
+</a>
+
+<a class="btn" href="{{m[5]}}">
+720p {{m[6]}}
+</a>
+
+<a class="btn" href="{{m[7]}}">
+1080p {{m[8]}}
+</a>
+
 </div>
