@@ -1,23 +1,10 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
-<div style="padding:15px">
-
 <form method="POST">
-
-<input name="name" value="{{m[1]}}">
-<input name="poster" value="{{m[2]}}">
-
-<input name="link480" value="{{m[3]}}">
-<input name="size480" value="{{m[4]}}">
-
-<input name="link720" value="{{m[5]}}">
-<input name="size720" value="{{m[6]}}">
-
-<input name="link1080" value="{{m[7]}}">
-<input name="size1080" value="{{m[8]}}">
-
+<input name="name" value="{{movie.name}}">
+<input name="poster" value="{{movie.poster}}">
+<input name="link480" value="{{movie.link480}}">
+<input name="link720" value="{{movie.link720}}">
+<input name="link1080" value="{{movie.link1080}}">
 <button class="btn">Update</button>
-
 </form>
-
-</div>
