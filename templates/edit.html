@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Edit Movie</h2>
+
+<form method="POST" action="/update/{{ movie.id }}">
+<input name="name" value="{{ movie.name }}">
+<input name="poster" value="{{ movie.poster }}">
+<input name="link_720" value="{{ movie.link_720 }}">
+<input name="link_1080" value="{{ movie.link_1080 }}">
+<button>Update</button>
+</form>
+
+</body>
+</html>
