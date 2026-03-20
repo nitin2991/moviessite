@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movies</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            background: #0b0f1a;
+            font-family: Arial;
+            color: white;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: linear-gradient(90deg, #1a1f3c, #2a0f4c);
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff3c3c;
+        }
+
+        .search {
+            padding: 6px;
+            border-radius: 20px;
+            border: none;
+            outline: none;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 15px;
+        }
+
+        .card {
+            background: #111827;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 10px;
+        }
+
+        .title {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            display: block;
+            text-align: center;
+            margin-top: 5px;
+            padding: 8px;
+            border-radius: 20px;
+            background: linear-gradient(45deg, #6a5cff, #ff4ecd);
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        @media (min-width: 700px) {
+            .container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <div class="logo">🎬 MoviesDrive</div>
+    <input class="search" placeholder="Search here...">
+</div>
+
+<div class="container">
+
+    {% for movie in movies %}
+    <div class="card">
+        <img src="{{ movie.poster }}">
+        <div class="card-content">
+            <div class="title">{{ movie.name }}</div>
+
+            <a class="btn" href="{{ movie.link_720 }}">Download 720p</a>
+            <a class="btn" href="{{ movie.link_1080 }}">Download 1080p</a>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+
+</body>
+</html>
